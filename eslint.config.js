@@ -81,6 +81,16 @@ export default [
                         'sibling',
                         'index',
                     ],
+                    // Always treat @/* aliases as internal regardless of whether
+                    // the file can be resolved (wayfinder generates routes/actions
+                    // at build time, so they may not exist in CI lint runs).
+                    pathGroups: [
+                        {
+                            pattern: '@/**',
+                            group: 'internal',
+                        },
+                    ],
+                    pathGroupsExcludedImportTypes: ['builtin'],
                     alphabetize: {
                         order: 'asc',
                         caseInsensitive: true,
