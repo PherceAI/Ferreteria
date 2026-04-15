@@ -37,6 +37,8 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
+            "App\\Domain\\": "app/Domain/",
+            "App\\Shared\\": "app/Shared/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
@@ -76,6 +78,9 @@
             "@php artisan config:clear --ansi",
             "@lint:check",
             "@php artisan test"
+        ],
+        "test:integration": [
+            "@php artisan test --configuration=phpunit.integration.xml"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

@@ -4,17 +4,70 @@ declare(strict_types=1);
 
 namespace App\Shared\Traits;
 
-/**
- * Placeholder — se implementa en el módulo Branches.
- *
- * Propósito: al montar este trait en un Model de `pherce_intel`, todas las queries
- * se filtran automáticamente por el `branch_id` activo en la sesión del usuario.
- * El rol Dueño bypasea este filtro para ver datos globales.
- *
- * Regla de negocio (ver Documentacion/business-rules.md):
- * toda data operacional está ligada a una sucursal y nunca se expone sin filtrar.
- */
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Context;
+
 trait BranchScoped
 {
-    //
+    protected static function bootBranchScoped(): void
+    {
+        static::addGlobalScope('branch', function (Builder $builder): void {
+            if (static::shouldBypassBranchScope()) {
+                return;
+            }
+
+            $branchId = Context::get('branch_id');
+
+            if ($branchId === null) {
+                if (auth()->check() && ! app()->runningInConsole()) {
+                    $builder->whereRaw('1 = 0');
+                }
+
+                return;
+            }
+
+            $builder->where(
+                $builder->getModel()->qualifyColumn($builder->getModel()->getBranchScopeColumn()),
+                $branchId,
+            );
+        });
+
+        static::creating(function (Model $model): void {
+            if (static::shouldBypassBranchScope()) {
+                return;
+            }
+
+            $branchId = Context::get('branch_id');
+            $column = $model->getBranchScopeColumn();
+
+            if ($branchId !== null && empty($model->getAttribute($column))) {
+                $model->setAttribute($column, $branchId);
+            }
+        });
+    }
+
+    public function getBranchScopeColumn(): string
+    {
+        return property_exists($this, 'branchScopeColumn')
+            ? $this->branchScopeColumn
+            : 'branch_id';
+    }
+
+    public function scopeForBranch(Builder $query, int $branchId): Builder
+    {
+        return $query
+            ->withoutGlobalScope('branch')
+            ->where($this->qualifyColumn($this->getBranchScopeColumn()), $branchId);
+    }
+
+    public function scopeWithoutBranchScope(Builder $query): Builder
+    {
+        return $query->withoutGlobalScope('branch');
+    }
+
+    protected static function shouldBypassBranchScope(): bool
+    {
+        return (bool) Context::getHidden('branch_scope_bypass', false);
+    }
 }

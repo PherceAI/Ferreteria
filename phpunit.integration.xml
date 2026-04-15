@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Suite de integracion opt-in.
+
+    NO corre por defecto ni en CI. Requiere que el usuario tenga Postgres y
+    Redis locales levantados antes de ejecutar. El objetivo de este suite es
+    validar los invariantes que la suite SQLite in-memory no puede cubrir:
+
+      1. BranchScoped filtra contra Postgres real.
+      2. Cache / Session / Queue sobre Redis estan bien cableados.
+      3. Los grants de ferreteria_app efectivamente bloquean escrituras sobre
+         tini_raw (cuando el script 02-sync-existing-volume.sql se aplico).
+
+    Uso:
+        composer test:integration
+
+    Este XML lee configuracion desde app/.env.testing, asi que cualquier
+    cambio de host, puerto o credenciales va ahi, no aqui.
+
+    Si en el futuro se decide meter este suite a CI, habria que agregar
+    services: postgres + redis en .github/workflows/lint.yml. Esa es una
+    decision operativa que conviene posponer hasta que los modulos de negocio
+    maduren.
+-->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+>
+    <testsuites>
+        <testsuite name="Integration">
+            <directory>tests/Integration</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory>app</directory>
+        </include>
+    </source>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="APP_MAINTENANCE_DRIVER" value="file"/>
+        <env name="BCRYPT_ROUNDS" value="4"/>
+        <!-- Broadcasting queda en log: no levantamos Reverb en tests. -->
+        <env name="BROADCAST_CONNECTION" value="log"/>
+        <!-- El resto (DB, Redis, Cache, Queue, Session) sale de .env.testing. -->
+        <env name="PULSE_ENABLED" value="false"/>
+        <env name="TELESCOPE_ENABLED" value="false"/>
+        <env name="NIGHTWATCH_ENABLED" value="false"/>
+    </php>
+</phpunit>

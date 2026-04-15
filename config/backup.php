@@ -236,7 +236,10 @@ return [
         'notifiable' => Notifiable::class,
 
         'mail' => [
-            'to' => 'your@example.com',
+            'to' => array_values(array_filter(array_map(
+                static fn (string $email): string => trim($email),
+                explode(',', (string) env('BACKUP_NOTIFICATIONS_EMAILS', '')),
+            ))),
 
             'from' => [
                 'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
@@ -332,7 +335,7 @@ return [
             /*
              * The number of days for which backups must be kept.
              */
-            'keep_all_backups_for_days' => 7,
+            'keep_all_backups_for_days' => 30,
 
             /*
              * After the "keep_all_backups_for_days" period is over, the most recent backup

@@ -2,11 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Laravel\Pulse\Facades\Pulse;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        $this->configureInternalAccess();
     }
 
     /**
@@ -46,5 +50,28 @@ class AppServiceProvider extends ServiceProvider
                 ->uncompromised()
             : null,
         );
+    }
+
+    protected function configureInternalAccess(): void
+    {
+        Gate::define('viewPulse', function (User $user) {
+            return $this->canAccessObservability($user);
+        });
+
+        Pulse::user(fn (User $user): array => [
+            'name' => $user->name,
+            'extra' => $user->email,
+            'avatar' => null,
+        ]);
+    }
+
+    protected function canAccessObservability(?User $user): bool
+    {
+        if (! $user instanceof User) {
+            return false;
+        }
+
+        return in_array($user->email, config('internal.observability_emails'), true)
+            || $user->hasRole(config('internal.observability_roles'));
     }
 }

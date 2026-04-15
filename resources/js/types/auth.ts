@@ -10,8 +10,20 @@ export type User = {
     [key: string]: unknown;
 };
 
+export type Branch = {
+    id: number;
+    name: string;
+    code: string;
+    city: string | null;
+    is_headquarters: boolean;
+    is_active: boolean;
+};
+
 export type Auth = {
     user: User;
+    activeBranch: Branch | null;
+    branches: Branch[];
+    canViewAllBranches: boolean;
 };
 
 export type TwoFactorSetupData = {

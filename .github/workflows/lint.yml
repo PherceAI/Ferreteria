@@ -34,13 +34,19 @@ jobs:
           npm install
 
       - name: Run Pint
-        run: composer lint
+        run: composer lint:check
 
       - name: Format Frontend
-        run: npm run format
+        run: npm run format:check
 
       - name: Lint Frontend
-        run: npm run lint
+        run: npm run lint:check
+
+      - name: Audit Composer Dependencies
+        run: composer audit
+
+      - name: Audit Production Node Dependencies
+        run: npm audit --omit=dev
 
       # - name: Commit Changes
       #   uses: stefanzweifel/git-auto-commit-action@v7

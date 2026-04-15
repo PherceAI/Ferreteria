@@ -40,6 +40,9 @@ class HandleInertiaRequests extends Middleware
             'name' => config('app.name'),
             'auth' => [
                 'user' => $request->user(),
+                'activeBranch' => $request->user()?->activeBranch,
+                'branches' => $request->user()?->branches()->orderByDesc('is_headquarters')->orderBy('name')->get(),
+                'canViewAllBranches' => $request->user()?->hasGlobalBranchAccess() ?? false,
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
