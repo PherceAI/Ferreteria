@@ -14,13 +14,25 @@ export default function AuthSplitLayout({
         <div className="relative grid h-dvh flex-col items-center justify-center px-8 sm:px-0 lg:max-w-none lg:grid-cols-2 lg:px-0">
             <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
                 <div className="absolute inset-0 bg-zinc-900" />
+                {/* Patrón decorativo sutil */}
+                <div className="absolute inset-0 opacity-5" style={{backgroundImage: 'repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%)', backgroundSize: '20px 20px'}} />
                 <Link
                     href={home()}
-                    className="relative z-20 flex items-center text-lg font-medium"
+                    className="relative z-20 flex items-center gap-2 text-lg font-semibold"
                 >
-                    <AppLogoIcon className="mr-2 size-8 fill-current text-white" />
-                    {name}
+                    <AppLogoIcon className="size-7 text-white" />
+                    <span>Comercial San Francisco</span>
                 </Link>
+                <div className="relative z-20 mt-auto">
+                    <blockquote className="space-y-2">
+                        <p className="text-base font-medium leading-relaxed text-zinc-200">
+                            Sistema de gestión inteligente para las 4 sucursales.
+                        </p>
+                        <footer className="text-sm text-zinc-400">
+                            Riobamba &amp; Macas · Ecuador
+                        </footer>
+                    </blockquote>
+                </div>
             </div>
             <div className="w-full lg:p-8">
                 <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">

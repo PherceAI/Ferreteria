@@ -34,3 +34,9 @@ export type TwoFactorSetupData = {
 export type TwoFactorSecretKey = {
     secretKey: string;
 };
+
+/** Estado de permiso de notificaciones del navegador */
+export type NotificationPermission = 'default' | 'granted' | 'denied';
+
+/** Shared prop inyectado por HandleInertiaRequests */
+export type VapidPublicKey = string;

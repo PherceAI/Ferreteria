@@ -31,3 +31,6 @@ yarn-error.log
 /docker/postgres/data
 /docker/redis/data
 
+
+# Carpeta de activos de diseño (íconos fuente, no van al repo)
+LOGO/

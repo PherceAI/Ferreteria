@@ -2,6 +2,7 @@ import { AppContent } from '@/components/app-content';
 import { AppShell } from '@/components/app-shell';
 import { AppSidebar } from '@/components/app-sidebar';
 import { AppSidebarHeader } from '@/components/app-sidebar-header';
+import { PushNotificationSetup } from '@/components/push-notification-setup';
 import type { AppLayoutProps } from '@/types';
 
 export default function AppSidebarLayout({
@@ -15,6 +16,8 @@ export default function AppSidebarLayout({
                 <AppSidebarHeader breadcrumbs={breadcrumbs} />
                 {children}
             </AppContent>
+            {/* Banner fijo en la parte inferior — no afecta el layout de ninguna página */}
+            <PushNotificationSetup />
         </AppShell>
     );
 }

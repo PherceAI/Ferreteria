@@ -45,6 +45,9 @@ class HandleInertiaRequests extends Middleware
                 'canViewAllBranches' => $request->user()?->hasGlobalBranchAccess() ?? false,
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            // Clave pública VAPID para que el frontend pueda suscribirse al push
+            // Es pública por diseño (el browser la necesita para cifrar la suscripción)
+            'vapidPublicKey' => config('webpush.vapid.public_key'),
         ];
     }
 }

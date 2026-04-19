@@ -23,18 +23,18 @@ export default function TwoFactorChallenge() {
     }>(() => {
         if (showRecoveryInput) {
             return {
-                title: 'Recovery code',
+                title: 'Código de recuperación',
                 description:
-                    'Please confirm access to your account by entering one of your emergency recovery codes.',
-                toggleText: 'login using an authentication code',
+                    'Ingresa uno de tus códigos de emergencia para acceder a tu cuenta.',
+                toggleText: 'usar código de autenticación',
             };
         }
 
         return {
-            title: 'Authentication code',
+            title: 'Verificación en dos pasos',
             description:
-                'Enter the authentication code provided by your authenticator application.',
-            toggleText: 'login using a recovery code',
+                'Ingresa el código generado por tu aplicación de autenticación.',
+            toggleText: 'usar código de recuperación',
         };
     }, [showRecoveryInput]);
 
@@ -103,16 +103,16 @@ export default function TwoFactorChallenge() {
                                 </div>
                             )}
 
-                            <Button
+                                            <Button
                                 type="submit"
                                 className="w-full"
                                 disabled={processing}
                             >
-                                Continue
+                                Continuar
                             </Button>
 
                             <div className="text-center text-sm text-muted-foreground">
-                                <span>or you can </span>
+                                <span>o puedes </span>
                                 <button
                                     type="button"
                                     className="cursor-pointer text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"

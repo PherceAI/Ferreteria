@@ -33,6 +33,19 @@
         <link rel="icon" href="/favicon.ico" sizes="any">
         <link rel="icon" href="/favicon.svg" type="image/svg+xml">
         <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+        <link rel="manifest" href="/site.webmanifest">
+
+        {{-- theme-color respeta modo claro/oscuro del sistema --}}
+        <meta name="theme-color" content="#f4f2f1" media="(prefers-color-scheme: light)">
+        <meta name="theme-color" content="#1a0a0b" media="(prefers-color-scheme: dark)">
+
+        {{-- iOS PWA: habilita instalación como app desde Safari --}}
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="CSF">
+
+        {{-- Android Chrome (no-Safari) --}}
+        <meta name="mobile-web-app-capable" content="yes">
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />

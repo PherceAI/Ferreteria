@@ -1,8 +1,19 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-react';
+import {
+    AlertTriangle,
+    BarChart3,
+    BookOpen,
+    Building2,
+    LayoutGrid,
+    Package,
+    ShoppingCart,
+    Tag,
+    Truck,
+    Users,
+    Warehouse,
+} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { BranchSwitcher } from '@/components/branch-switcher';
-import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import {
@@ -13,6 +24,7 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    SidebarSeparator,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
@@ -23,18 +35,68 @@ const mainNavItems: NavItem[] = [
         href: dashboard(),
         icon: LayoutGrid,
     },
-];
-
-const footerNavItems: NavItem[] = [
     {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: FolderGit2,
+        title: 'Inventario',
+        href: '#',
+        icon: Package,
+        disabled: true,
     },
     {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
+        title: 'Compras',
+        href: '#',
+        icon: ShoppingCart,
+        disabled: true,
+    },
+    {
+        title: 'Ventas',
+        href: '#',
+        icon: Tag,
+        disabled: true,
+    },
+    {
+        title: 'Bodega',
+        href: '#',
+        icon: Warehouse,
+        disabled: true,
+    },
+    {
+        title: 'Contabilidad',
+        href: '#',
         icon: BookOpen,
+        disabled: true,
+    },
+    {
+        title: 'Alertas',
+        href: '#',
+        icon: AlertTriangle,
+        disabled: true,
+    },
+];
+
+const adminNavItems: NavItem[] = [
+    {
+        title: 'Reportes',
+        href: '#',
+        icon: BarChart3,
+        disabled: true,
+    },
+    {
+        title: 'Proveedores',
+        href: '#',
+        icon: Truck,
+        disabled: true,
+    },
+    {
+        title: 'Sucursales',
+        href: '#',
+        icon: Building2,
+        disabled: true,
+    },
+    {
+        title: 'Usuarios',
+        href: '#',
+        icon: Users,
+        disabled: true,
     },
 ];
 
@@ -54,11 +116,12 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                <NavMain items={mainNavItems} label="Módulos" />
+                <SidebarSeparator />
+                <NavMain items={adminNavItems} label="Administración" />
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
                 <BranchSwitcher />
                 <NavUser />
             </SidebarFooter>

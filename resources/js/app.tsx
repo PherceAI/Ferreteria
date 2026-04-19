@@ -7,6 +7,17 @@ import AppLayout from '@/layouts/app-layout';
 import AuthLayout from '@/layouts/auth-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 
+// Registrar el service worker para web push notifications.
+// Lo hacemos aquí (fuera del componente) para que ocurra una sola vez al cargar la app.
+// El SW vive en public/sw.js y tiene scope '/' (toda la app).
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch((error) => {
+            console.warn('[SW] Registration failed:', error);
+        });
+    });
+}
+
 configureEcho({
     broadcaster: 'reverb',
 });
@@ -18,6 +29,7 @@ createInertiaApp({
     layout: (name) => {
         switch (true) {
             case name === 'welcome':
+            case name === 'branch-required':
                 return null;
             case name.startsWith('auth/'):
                 return AuthLayout;
