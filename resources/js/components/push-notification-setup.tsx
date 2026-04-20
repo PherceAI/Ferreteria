@@ -15,7 +15,8 @@ import { useWebPush } from '@/hooks/use-web-push';
  * ninguna página. Desaparece al activar, denegar o cerrar manualmente.
  */
 export function PushNotificationSetup() {
-    const { isSupported, permission, isSubscribed, isLoading, subscribe } = useWebPush();
+    const { isSupported, permission, isSubscribed, isLoading, subscribe } =
+        useWebPush();
     const [dismissed, setDismissed] = useState(false);
 
     if (!isSupported || permission !== 'default' || isSubscribed || dismissed) {
@@ -44,7 +45,8 @@ export function PushNotificationSetup() {
                         Activa las notificaciones
                     </p>
                     <p className="mt-0.5 text-zinc-500 dark:text-zinc-400">
-                        Recibe alertas de stock y recepciones aunque el sistema esté cerrado.
+                        Recibe alertas de stock y recepciones aunque el sistema
+                        esté cerrado.
                     </p>
                     <div className="mt-3 flex gap-2">
                         <Button
@@ -83,8 +85,14 @@ export function PushNotificationSetup() {
  * Permite activar/desactivar notificaciones después del primer setup.
  */
 export function PushNotificationToggle() {
-    const { isSupported, permission, isSubscribed, isLoading, subscribe, unsubscribe } =
-        useWebPush();
+    const {
+        isSupported,
+        permission,
+        isSubscribed,
+        isLoading,
+        subscribe,
+        unsubscribe,
+    } = useWebPush();
 
     if (!isSupported) {
         return (
@@ -99,8 +107,8 @@ export function PushNotificationToggle() {
             <div className="flex items-center gap-2 text-sm text-amber-600 dark:text-amber-400">
                 <BellOff className="h-4 w-4 shrink-0" />
                 <span>
-                    Notificaciones bloqueadas. Actívalas en la configuración de tu navegador y
-                    recarga la página.
+                    Notificaciones bloqueadas. Actívalas en la configuración de
+                    tu navegador y recarga la página.
                 </span>
             </div>
         );

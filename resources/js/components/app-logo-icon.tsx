@@ -2,7 +2,12 @@ import type { SVGAttributes } from 'react';
 
 export default function AppLogoIcon(props: SVGAttributes<SVGElement>) {
     return (
-        <svg {...props} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            {...props}
+            viewBox="0 0 40 40"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
             <path
                 fillRule="evenodd"
                 clipRule="evenodd"
@@ -19,7 +24,16 @@ export default function AppLogoIcon(props: SVGAttributes<SVGElement>) {
                 fill="currentColor"
                 opacity="0.7"
             />
-            <rect x="1.5" y="28" width="6" height="6" rx="1.5" transform="rotate(-45 1.5 28)" fill="currentColor" opacity="0.8"/>
+            <rect
+                x="1.5"
+                y="28"
+                width="6"
+                height="6"
+                rx="1.5"
+                transform="rotate(-45 1.5 28)"
+                fill="currentColor"
+                opacity="0.8"
+            />
         </svg>
     );
 }

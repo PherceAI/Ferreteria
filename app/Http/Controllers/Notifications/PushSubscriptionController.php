@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Notifications;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Notifications\StorePushSubscriptionRequest;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -27,7 +28,7 @@ final class PushSubscriptionController extends Controller
      */
     public function store(StorePushSubscriptionRequest $request): JsonResponse
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         $user->updatePushSubscription(
@@ -49,7 +50,7 @@ final class PushSubscriptionController extends Controller
         $endpoint = $request->string('endpoint')->toString();
 
         if ($endpoint !== '') {
-            /** @var \App\Models\User $user */
+            /** @var User $user */
             $user = $request->user();
             $user->deletePushSubscription($endpoint);
         }

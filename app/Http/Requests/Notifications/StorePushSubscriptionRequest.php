@@ -17,9 +17,9 @@ final class StorePushSubscriptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'endpoint'        => ['required', 'url', 'max:500'],
-            'key'             => ['nullable', 'string', 'max:255'],
-            'token'           => ['nullable', 'string', 'max:255'],
+            'endpoint' => ['required', 'url', 'max:500'],
+            'key' => ['nullable', 'string', 'max:255'],
+            'token' => ['nullable', 'string', 'max:255'],
             'contentEncoding' => ['nullable', 'string', 'in:aesgcm,aes128gcm'],
         ];
     }

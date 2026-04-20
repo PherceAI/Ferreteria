@@ -7,7 +7,9 @@ import { useCallback, useEffect, useState } from 'react';
  */
 function urlBase64ToUint8Array(base64String: string): Uint8Array {
     const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+    const base64 = (base64String + padding)
+        .replace(/-/g, '+')
+        .replace(/_/g, '/');
     const rawData = window.atob(base64);
     const output = new Uint8Array(rawData.length);
 
@@ -91,10 +93,9 @@ export function useWebPush(): WebPushState {
             // 3. Extraer claves para enviar al servidor
             const p256dhKey = subscription.getKey('p256dh');
             const authKey = subscription.getKey('auth');
-            const contentEncoding = (
-                (PushManager as { supportedContentEncodings?: string[] })
-                    .supportedContentEncodings ?? ['aesgcm']
-            )[0];
+            const contentEncoding = ((
+                PushManager as { supportedContentEncodings?: string[] }
+            ).supportedContentEncodings ?? ['aesgcm'])[0];
 
             // 4. Guardar suscripción en el servidor
             await new Promise<void>((resolve, reject) => {
@@ -110,7 +111,8 @@ export function useWebPush(): WebPushState {
                         preserveState: true,
                         preserveScroll: true,
                         onSuccess: () => resolve(),
-                        onError: () => reject(new Error('Failed to store subscription')),
+                        onError: () =>
+                            reject(new Error('Failed to store subscription')),
                     },
                 );
             });
@@ -134,7 +136,8 @@ export function useWebPush(): WebPushState {
 
         try {
             const registration = await navigator.serviceWorker.ready;
-            const subscription = await registration.pushManager.getSubscription();
+            const subscription =
+                await registration.pushManager.getSubscription();
 
             if (!subscription) {
                 setIsSubscribed(false);
@@ -160,5 +163,12 @@ export function useWebPush(): WebPushState {
         }
     }, [isSupported]);
 
-    return { isSupported, permission, isSubscribed, isLoading, subscribe, unsubscribe };
+    return {
+        isSupported,
+        permission,
+        isSubscribed,
+        isLoading,
+        subscribe,
+        unsubscribe,
+    };
 }

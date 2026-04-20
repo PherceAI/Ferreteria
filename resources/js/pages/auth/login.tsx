@@ -7,21 +7,15 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
-import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
 
 type Props = {
     status?: string;
     canResetPassword: boolean;
-    canRegister: boolean;
 };
 
-export default function Login({
-    status,
-    canResetPassword,
-    canRegister,
-}: Props) {
+export default function Login({ status, canResetPassword }: Props) {
     return (
         <>
             <Head title="Log in" />
@@ -35,7 +29,9 @@ export default function Login({
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Correo electrónico</Label>
+                                <Label htmlFor="email">
+                                    Correo electrónico
+                                </Label>
                                 <Input
                                     id="email"
                                     type="email"
